@@ -1,0 +1,11 @@
+{
+  "name": "ng2-content-tools",
+  "version": "1.0.0",
+  "description": "Content Tools (http://getcontenttools.com/) Angular 2 implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Martin Kopeček <martin.kopecek@smallhill.cz>",
+  "license": "GPL-3.0"
+}
