@@ -1,15 +1,15 @@
 import { NgModule }           from '@angular/core';
 
-import { ContentToolsService } from './src/service';
-import { ContentToolsDirective } from './src/directive';
-
+export { ContentToolsService } from './src/service';
+export { ContentToolsDirective } from './src/directive';
+/*
 export { ContentToolsService };
 export { ContentToolsDirective };
 
 @NgModule({
-  imports:      [ ],
+  imports:      [ CommonModule ],
   declarations: [ ContentToolsDirective ],
-  exports:      [ ],
+  exports:      [ ContentToolsDirective ],
   providers:    [ ContentToolsService ]
 })
-export class ContentToolsModule { }
+export class ContentToolsModule { }*/
