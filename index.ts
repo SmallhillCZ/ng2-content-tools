@@ -7,6 +7,6 @@ import { ContentToolsDirective } from './src/directive';
   imports:      [ ],
   declarations: [ ContentToolsDirective ],
   exports:      [ ],
-  providers:    [ ContaContentToolsDirectivectService ]
+  providers:    [ ContentToolsService ]
 })
 export class ContentToolsModule { }

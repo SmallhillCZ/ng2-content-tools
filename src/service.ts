@@ -30,7 +30,8 @@ export class ContentToolsService {
 		this.editor.init(o.query,o.idField,o.fixture,o.ignition);
 	}
 
-	startEdit(query?){
+	startEdit(id?){
+						
 		// if id is provided, launch editing only for region with this id
 		if(id) this.setRegions([id]);
 						

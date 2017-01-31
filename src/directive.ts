@@ -1,6 +1,8 @@
 import {  Directive, ElementRef, ValueProvider, Input, Output, EventEmitter, forwardRef  } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { ContentToolsService } from './service';
+
 // value accessor, for ngModel
 const CUSTOM_VALUE_ACCESSOR = {
 	provide: NG_VALUE_ACCESSOR,
