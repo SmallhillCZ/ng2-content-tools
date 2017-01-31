@@ -64,7 +64,7 @@ var ContentToolsDirective = (function () {
         this.ctService.editor.addEventListener('saved', function () {
             if (_this._toBeSaved) {
                 _this.onChange(_this.el.nativeElement.innerHTML);
-                _this.save.emit();
+                _this.save.emit(_this.el.nativeElement.innerHTML);
                 _this._toBeSaved = false;
             }
         });
@@ -106,6 +106,7 @@ var ContentToolsDirective = (function () {
     };
     ContentToolsDirective.prototype.ngOnDestroy = function () {
         this.stopEditing(false);
+        this.ctService.removeRegion(this.id);
     };
     /* ngModel */
     ContentToolsDirective.prototype.writeValue = function (value) {

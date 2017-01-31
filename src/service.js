@@ -33,8 +33,8 @@ var ContentToolsService = (function () {
         // if there is ID, either edit just that region, or add it to the edited ones if already editing
         if (id) {
             if (this.editor.getState() === ContentTools.EditorApp.EDITING)
-                if (this.regions.indexOf(id) < 0)
-                    this.regions.push(id);
+                if (this.editedRegions.indexOf(id) < 0)
+                    this.editedRegions.push(id);
                 else
                     this.editedRegions = [id];
         }

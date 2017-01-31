@@ -106,7 +106,8 @@ export class ContentToolsDirective implements ControlValueAccessor {
 	}
 	
 	ngOnDestroy(){
-			this.stopEditing(false);
+		this.stopEditing(false);
+		this.ctService.removeRegion(this.id);
 	}
 
 	/* ngModel */
