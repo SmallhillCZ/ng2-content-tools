@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { EditorApp } from "ContentTools";
+declare var EditorApp:any;
 
 @Injectable()
 export class ContentToolsService {

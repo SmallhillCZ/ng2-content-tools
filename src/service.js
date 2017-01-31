@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var content_tools_js_1 = require("../node_modules/ContentTools/build/content-tools.js");
 var ContentToolsService = (function () {
     function ContentToolsService() {
         // regions for editing - if edit is launched by startEdit without id or by IgnitionUI, then this is used
@@ -22,7 +21,7 @@ var ContentToolsService = (function () {
             ignition: true
         };
         // get the editor
-        this.editor = content_tools_js_1.EditorApp.get();
+        this.editor = EditorApp.get();
     }
     // translation of editor.init()
     ContentToolsService.prototype.init = function (options) {
@@ -54,7 +53,7 @@ var ContentToolsService = (function () {
         if (this.regions.indexOf(id) < 0)
             this.regions.push(id);
         // dont set in case of editing, it will be set when stopEdit is called
-        if (this.editor.getState() !== content_tools_js_1.EditorApp.EDITING)
+        if (this.editor.getState() !== EditorApp.EDITING)
             this.setRegions(this.regions);
     };
     // removes region to editable regions
@@ -62,7 +61,7 @@ var ContentToolsService = (function () {
         // remove from regions array
         this.regions.splice(this.regions.indexOf(id), 1);
         // dont set in case of editing, it will be set when stopEdit is called
-        if (this.editor.getState() !== content_tools_js_1.EditorApp.EDITING)
+        if (this.editor.getState() !== EditorApp.EDITING)
             this.setRegions(this.regions);
     };
     // set regions by ID - converts array of IDs into css query #ID1,#ID2,..

@@ -10,6 +10,5 @@
 		"@angular/common": "~2.4.0",
     "@angular/core": "~2.4.0",
     "@angular/forms": "~2.4.0",
-		"ContentTools": "GetmeUK/ContentTools"
 	}
 }
