@@ -50,8 +50,14 @@ export class AppComponent {
 ``` html
 <div content-tools [editing]="" [editable]="" (start)="" (stop)="" (save)=""></div>
 ```
+### Configuring Content Tools
 
-### Settings
+You can configure Content Tools in the standard way. The editor instance is stored at
+```
+ContentToolsService.editor
+```
+
+### Directive parameters
 #### editing:boolean
 - This parameter decides, whether the region is being edited at the moment.
 - If set true, only this region will be activated for editing.
