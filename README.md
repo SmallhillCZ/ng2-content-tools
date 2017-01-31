@@ -7,7 +7,7 @@ This package creates an Angular 2 directive for Content Tools (getcontenttools.c
 Firstly, install this npm package:
 
 ``` sh
-npm install ng2-content-tools
+npm install SmallhillCZ/ng2-content-tools
 ```
 
 Now include ContentTools js and css files in your index.html:
