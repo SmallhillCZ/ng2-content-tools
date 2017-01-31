@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-declare var EditorApp:any;
+declare var ContentTools:any;
 
 @Injectable()
 export class ContentToolsService {
@@ -9,6 +9,8 @@ export class ContentToolsService {
 
 	// regions for editing - if edit is launched by startEdit without id or by IgnitionUI, then this is used
 	regions:string[] = [];
+
+	editedRegions:string[] = [];
 
 	// CT directives get automatic ID if no ID present
 	idCounter:number = 0;
@@ -21,7 +23,7 @@ export class ContentToolsService {
 	
 	constructor(){
 		// get the editor
-		this.editor = EditorApp.get();
+		this.editor = ContentTools.EditorApp.get();
 	}
 
 	// translation of editor.init()
@@ -31,9 +33,15 @@ export class ContentToolsService {
 	}
 
 	startEdit(id?){
-						
-		// if id is provided, launch editing only for region with this id
-		if(id) this.setRegions([id]);
+				
+		// if there is ID, either edit just that region, or add it to the edited ones if already editing
+		if(id){
+			if(this.editor.getState() === ContentTools.EditorApp.EDITING) if(this.regions.indexOf(id) < 0) this.regions.push(id);
+			else this.editedRegions = [id];
+		}
+			
+		// set and refresh regions
+		this.setRegions(this.editedRegions);
 						
 		// launch editor
 		this.editor.start();	
@@ -48,7 +56,8 @@ export class ContentToolsService {
 		this.editor.stop(save);
 						
 		// set all regions, in case single region was specified in startEdit
-		this.setRegions(this.regions);
+		this.editedRegions = this.regions;
+						
 		// if IgnitionUI present, propagate change of status there
 		if(this.editor.ignition()) this.editor.ignition().state("ready");
 	}
@@ -58,7 +67,7 @@ export class ContentToolsService {
 		// prevent duplicates
 		if(this.regions.indexOf(id) < 0) this.regions.push(id);
 		// dont set in case of editing, it will be set when stopEdit is called
-		if(this.editor.getState() !== EditorApp.EDITING) this.setRegions(this.regions);
+		if(this.editor.getState() !== ContentTools.EditorApp.EDITING) this.setRegions(this.regions);
 	}
 	
 	// removes region to editable regions
@@ -66,7 +75,7 @@ export class ContentToolsService {
 		// remove from regions array
 		this.regions.splice(this.regions.indexOf(id),1);
 		// dont set in case of editing, it will be set when stopEdit is called
-		if(this.editor.getState() !== EditorApp.EDITING) this.setRegions(this.regions);
+		if(this.editor.getState() !== ContentTools.EditorApp.EDITING) this.setRegions(this.regions);
 	}
 					 
 	// set regions by ID - converts array of IDs into css query #ID1,#ID2,..

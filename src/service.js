@@ -13,6 +13,7 @@ var ContentToolsService = (function () {
     function ContentToolsService() {
         // regions for editing - if edit is launched by startEdit without id or by IgnitionUI, then this is used
         this.regions = [];
+        this.editedRegions = [];
         // CT directives get automatic ID if no ID present
         this.idCounter = 0;
         // default options if not set by init()
@@ -21,7 +22,7 @@ var ContentToolsService = (function () {
             ignition: true
         };
         // get the editor
-        this.editor = EditorApp.get();
+        this.editor = ContentTools.EditorApp.get();
     }
     // translation of editor.init()
     ContentToolsService.prototype.init = function (options) {
@@ -29,9 +30,16 @@ var ContentToolsService = (function () {
         this.editor.init(o.query, o.idField, o.fixture, o.ignition);
     };
     ContentToolsService.prototype.startEdit = function (id) {
-        // if id is provided, launch editing only for region with this id
-        if (id)
-            this.setRegions([id]);
+        // if there is ID, either edit just that region, or add it to the edited ones if already editing
+        if (id) {
+            if (this.editor.getState() === ContentTools.EditorApp.EDITING)
+                if (this.regions.indexOf(id) < 0)
+                    this.regions.push(id);
+                else
+                    this.editedRegions = [id];
+        }
+        // set and refresh regions
+        this.setRegions(this.editedRegions);
         // launch editor
         this.editor.start();
         // if IgnitionUI present, propagate change of status there
@@ -42,7 +50,7 @@ var ContentToolsService = (function () {
         // stop editing, hide editor
         this.editor.stop(save);
         // set all regions, in case single region was specified in startEdit
-        this.setRegions(this.regions);
+        this.editedRegions = this.regions;
         // if IgnitionUI present, propagate change of status there
         if (this.editor.ignition())
             this.editor.ignition().state("ready");
@@ -53,7 +61,7 @@ var ContentToolsService = (function () {
         if (this.regions.indexOf(id) < 0)
             this.regions.push(id);
         // dont set in case of editing, it will be set when stopEdit is called
-        if (this.editor.getState() !== EditorApp.EDITING)
+        if (this.editor.getState() !== ContentTools.EditorApp.EDITING)
             this.setRegions(this.regions);
     };
     // removes region to editable regions
@@ -61,7 +69,7 @@ var ContentToolsService = (function () {
         // remove from regions array
         this.regions.splice(this.regions.indexOf(id), 1);
         // dont set in case of editing, it will be set when stopEdit is called
-        if (this.editor.getState() !== EditorApp.EDITING)
+        if (this.editor.getState() !== ContentTools.EditorApp.EDITING)
             this.setRegions(this.regions);
     };
     // set regions by ID - converts array of IDs into css query #ID1,#ID2,..
