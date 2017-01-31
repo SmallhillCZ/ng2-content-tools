@@ -47,21 +47,18 @@ var ContentToolsDirective = (function () {
                 return _this.stopEditing(true);
         });
         this.ctService.addRegion(this.id);
-        this.ctService.editor.addEventListener('start', function () {
-            if (_this._editable) {
-                _this.el.nativeElement.classList.add("editing");
-                _this._editing = true;
-                _this.start.emit();
-            }
+        /* EVENTS */
+        this.ctService.addRegionEventListener(this.id, 'start', function () {
+            _this.el.nativeElement.classList.add("editing");
+            _this._editing = true;
+            _this.start.emit();
         });
-        this.ctService.editor.addEventListener('stop', function () {
-            if (_this._editing) {
-                _this.el.nativeElement.classList.remove("editing");
-                _this._editing = false;
-                _this.stop.emit();
-            }
+        this.ctService.addRegionEventListener(this.id, 'stop', function () {
+            _this.el.nativeElement.classList.remove("editing");
+            _this._editing = false;
+            _this.stop.emit();
         });
-        this.ctService.editor.addEventListener('saved', function () {
+        this.ctService.addRegionEventListener(this.id, 'saved', function () {
             if (_this._toBeSaved) {
                 _this.onChange(_this.el.nativeElement.innerHTML);
                 _this.save.emit(_this.el.nativeElement.innerHTML);

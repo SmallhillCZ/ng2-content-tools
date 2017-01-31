@@ -7,13 +7,16 @@ export class ContentToolsService {
 	
 	editor: any;
 
-	// regions for editing - if edit is launched by startEdit without id or by IgnitionUI, then this is used
+	// all regions (directives)
 	regions:string[] = [];
 
+	// regions for editing - if edit is launched by startEdit without id or by IgnitionUI, then this is used
 	editedRegions:string[] = [];
 
 	// CT directives get automatic ID if no ID present
 	idCounter:number = 0;
+
+	eventListeners = {};
 
 	// default options if not set by init()
 	defaultOptions = {
@@ -29,19 +32,35 @@ export class ContentToolsService {
 	// translation of editor.init()
 	init(options?){
 		var o = Object.assign({},this.defaultOptions,options ? options : {});
-		this.editor.init(o.query,o.idField,o.fixture,o.ignition);
+		this.editor.init("","id",o.fixture,o.ignition);
+
+		this.editor.addEventListener('start',e => this.fireRegionEvent(e));
+		this.editor.addEventListener('stop',e => this.fireRegionEvent(e));
+		this.editor.addEventListener('saved',e => this.fireRegionEvent(e));
+	}
+																		
+	addRegionEventListener(id,eventName,cb){
+		if(!this.eventListeners[id]) this.eventListeners[id] = {};
+		if(!this.eventListeners[id][eventName]) this.eventListeners[id][eventName] = [];
+		this.eventListeners[id][eventName].push(cb);
+	}
+																		
+	fireRegionEvent(e){
+		this.editedRegions.forEach(id => {
+			if(this.eventListeners[id] && this.eventListeners[id][e._name]) this.eventListeners[id][e._name].forEach(cb => cb(e));
+		});
 	}
 
 	startEdit(id?){
-				
+
 		// if there is ID, either edit just that region, or add it to the edited ones if already editing
 		if(id){
-			if(this.editor.getState() === ContentTools.EditorApp.EDITING) if(this.editedRegions.indexOf(id) < 0) this.editedRegions.push(id);
-			else this.editedRegions = [id];
+			if(this.editor.getState() === "editing"){
+						if(this.editedRegions.indexOf(id) < 0) this.editedRegions.push(id);
+						this.setEditedRegions(this.editedRegions);
+			}
+			else{ this.setEditedRegions([id]); }
 		}
-			
-		// set and refresh regions
-		this.setRegions(this.editedRegions);
 						
 		// launch editor
 		this.editor.start();	
@@ -56,30 +75,42 @@ export class ContentToolsService {
 		this.editor.stop(save);
 						
 		// set all regions, in case single region was specified in startEdit
-		this.editedRegions = this.regions;
+		this.setEditedRegions(this.regions);
 						
 		// if IgnitionUI present, propagate change of status there
 		if(this.editor.ignition()) this.editor.ignition().state("ready");
 	}
+						
+	isRegionEdited(id){
+		return this.editedRegions.indexOf(id) >= 0;
+	}
 	
-	// adds region to editable regions
+	// adds region to list
 	addRegion(id){
 		// prevent duplicates
 		if(this.regions.indexOf(id) < 0) this.regions.push(id);
 		// dont set in case of editing, it will be set when stopEdit is called
-		if(this.editor.getState() !== ContentTools.EditorApp.EDITING) this.setRegions(this.regions);
+		if(this.editor.getState() !== "editing"){
+			if(this.editedRegions.indexOf(id) < 0) this.editedRegions.push(id);
+			this.setEditedRegions(this.editedRegions);
+		}
 	}
 	
-	// removes region to editable regions
+	// removes region to list
 	removeRegion(id){
 		// remove from regions array
-		this.regions.splice(this.regions.indexOf(id),1);
+		if(this.regions.indexOf(id)) this.regions.splice(this.regions.indexOf(id),1);
+						
 		// dont set in case of editing, it will be set when stopEdit is called
-		if(this.editor.getState() !== ContentTools.EditorApp.EDITING) this.setRegions(this.regions);
+		if(this.editor.getState() !== "editing"){
+			if(this.editedRegions.indexOf(id) < 0) this.editedRegions.splice(this.editedRegions.indexOf(id),1);
+			this.setEditedRegions(this.editedRegions);
+		}
 	}
 					 
 	// set regions by ID - converts array of IDs into css query #ID1,#ID2,..
-	setRegions(regions){
+	setEditedRegions(regions){
+		this.editedRegions = regions;
 		this.editor.syncRegions(regions.map(item => "#" + item).join(","));
 	}
 					 

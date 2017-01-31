@@ -66,23 +66,20 @@ export class ContentToolsDirective implements ControlValueAccessor {
 		
 		this.ctService.addRegion(this.id);
 		
-		this.ctService.editor.addEventListener('start',() => {
-			if(this._editable) {
-				this.el.nativeElement.classList.add("editing");
-				this._editing = true;
-				this.start.emit();
-			}
+		/* EVENTS */
+		this.ctService.addRegionEventListener(this.id,'start',() => {
+			this.el.nativeElement.classList.add("editing");
+			this._editing = true;
+			this.start.emit();
 		});
 			
-		this.ctService.editor.addEventListener('stop',() => {
-			if(this._editing) {
-				this.el.nativeElement.classList.remove("editing");
-				this._editing = false;
-				this.stop.emit();
-			}
+		this.ctService.addRegionEventListener(this.id,'stop',() => {
+			this.el.nativeElement.classList.remove("editing");
+			this._editing = false;
+			this.stop.emit();
 		});
 		
-		this.ctService.editor.addEventListener('saved',() => {
+		this.ctService.addRegionEventListener(this.id,'saved',() => {
 			if(this._toBeSaved) {
 				this.onChange(this.el.nativeElement.innerHTML);
 				this.save.emit(this.el.nativeElement.innerHTML);
