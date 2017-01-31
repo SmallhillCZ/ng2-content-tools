@@ -85,7 +85,7 @@ export class ContentToolsDirective implements ControlValueAccessor {
 		this.ctService.editor.addEventListener('saved',() => {
 			if(this._toBeSaved) {
 				this.onChange(this.el.nativeElement.innerHTML);
-				this.save.emit();
+				this.save.emit(this.el.nativeElement.innerHTML);
 				this._toBeSaved = false;
 			}
 		});
