@@ -10,3 +10,6 @@ import { ContentToolsDirective } from './src/directive';
   providers:    [ ContentToolsService ]
 })
 export class ContentToolsModule { }
+
+export ContentToolsService;
+export ContentToolsDirective;

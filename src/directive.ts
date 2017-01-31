@@ -1,4 +1,4 @@
-import {  Directive, ElementRef, ValueProvider, Input, Output, EventEmitter, forwardRef  } from '@angular/core';
+import { Directive, ElementRef, ValueProvider, Input, Output, EventEmitter, forwardRef  } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ContentToolsService } from './service';
