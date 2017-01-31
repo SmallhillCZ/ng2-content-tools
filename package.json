@@ -9,6 +9,9 @@
   "author": "Martin Kopeček <martin.kopecek@smallhill.cz>",
   "license": "GPL-3.0",
 	"dependencies": {
-		"content-tools": "GetmeUK/ContentTools"
+		"@angular/common": "~2.4.0",
+    "@angular/core": "~2.4.0",
+    "@angular/forms": "~2.4.0",
+		"ContentTools": "GetmeUK/ContentTools"
 	}
 }
