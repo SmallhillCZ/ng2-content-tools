@@ -45,7 +45,7 @@ export class AppComponent {
 - Query is not used, because regions are determined by using the directive
 - name is not used as ID parameter is used.
 
-### Include directive in Angular2 template
+### 2) Include directive in Angular2 template
 
 ``` html
 <div content-tools [editing]="" [editable]="" (start)="" (stop)="" (save)=""></div>
