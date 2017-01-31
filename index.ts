@@ -1,11 +1,12 @@
-import { NgModule, Directive, ElementRef, Input } from '@angular/core';
+import { NgModule }           from '@angular/core';
 
-@Directive({ selector: '[data-editable]' })
-export class ng2ContentTools {
-	
-    constructor(el: ElementRef) {
-       var this.el = el;
-			//el.nativeElement
-    }
-	
-}
+import { ContentToolsService } from './src/service';
+import { ContentToolsDirective } from './src/directive';
+
+@NgModule({
+  imports:      [ ],
+  declarations: [ ContentToolsDirective ],
+  exports:      [ ],
+  providers:    [ ContaContentToolsDirectivectService ]
+})
+export class ContentToolsModule { }
