@@ -1,15 +1,16 @@
-import { NgModule }           from '@angular/core';
+import { NgModule, ModuleWithProviders }           from '@angular/core';
 
-export { ContentToolsService } from './src/service';
-export { ContentToolsDirective } from './src/directive';
-/*
-export { ContentToolsService };
-export { ContentToolsDirective };
+import { ContentToolsService } from './src/service';
+import { ContentToolsDirective } from './src/directive';
+
+export { ContentToolsService, ContentToolsDirective };
 
 @NgModule({
-  imports:      [ CommonModule ],
   declarations: [ ContentToolsDirective ],
-  exports:      [ ContentToolsDirective ],
-  providers:    [ ContentToolsService ]
+  exports:      [ ContentToolsDirective ]
 })
-export class ContentToolsModule { }*/
+export class ContentToolsModule {
+	public static forRoot(): ModuleWithProviders {
+    return {ngModule: ContentToolsModule, providers: [ContentToolsService]};
+  }
+}
