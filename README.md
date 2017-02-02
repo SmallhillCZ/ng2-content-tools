@@ -32,23 +32,23 @@ export class AppComponent {
 	constructor(private ctService: ContentToolsService) {}
 
 	ngOnInit(){
-		this.ctService.init({
+		this.ctService.init(
+			"*[content-tools]",
+			"id",
 			fixture: (el) => el.hasAttribute('data-fixture'),
 			ignition: false
-		});
+		);
 	}   
 
 }
 ```
 
 - The settings are the same as in Content Tools
-- Query is not used, because regions are determined by using the directive
-- name is not used as ID parameter is used.
 
 ### 2) Include directive in Angular2 template
 
 ``` html
-<div content-tools [editing]="" [editable]="" (start)="" (stop)="" (save)=""></div>
+<div content-tools (start)="" (stop)="" (save)="" (saved)=""></div>
 ```
 ### Configuring Content Tools
 
@@ -58,13 +58,6 @@ ContentToolsService.editor
 ```
 
 ### Directive parameters
-#### editing:boolean
-- This parameter decides, whether the region is being edited at the moment.
-- If set true, only this region will be activated for editing.
-- If another region is set for editing while editing this one, it will be added to editing.
-
-#### editable:boolean
-- This parameter decides, whether the region will be activated for editing when editing is activated by IgnitionUI
 
 ### Events
 
@@ -75,5 +68,8 @@ ContentToolsService.editor
 - Event is fired when editing of this region is stopped
 
 #### save
-- Event is fired after stop if this region should be saved
+- Event is fired after stop if this region should be saved (was edited)
+
+#### saved
+- Event is fired after stop if this region should be saved (was edited)
 
