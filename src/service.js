@@ -18,10 +18,10 @@ var ContentToolsService = (function () {
         this.editor = ContentTools.EditorApp.get();
     }
     // translation of editor.init()
-    ContentToolsService.prototype.init = function (options) {
+    ContentToolsService.prototype.init = function (query, id, fixture, ignition) {
         var _this = this;
-        this.editor.init(options);
-        this.query = options[0];
+        this.editor.init(query, id, fixture, ignition);
+        this.query = query;
         this.editor.addEventListener('start', function (e) { return _this.fireRegionEvent(e); });
         this.editor.addEventListener('stop', function (e) { return _this.fireRegionEvent(e); });
         this.editor.addEventListener('saved', function (e) { return _this.fireRegionEvent(e); });

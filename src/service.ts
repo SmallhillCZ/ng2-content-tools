@@ -22,10 +22,10 @@ export class ContentToolsService {
 	}
 
 	// translation of editor.init()
-	init(options){
-		this.editor.init(options);
+	init(query,id,fixture,ignition){
+		this.editor.init(query,id,fixture,ignition);
 			 
-		this.query = options[0];
+		this.query = query;
 
 		this.editor.addEventListener('start',e => this.fireRegionEvent(e));
 		this.editor.addEventListener('stop',e => this.fireRegionEvent(e));
