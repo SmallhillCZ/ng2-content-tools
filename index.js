@@ -8,23 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var service_1 = require('./src/service');
+var core_1 = require("@angular/core");
+var service_1 = require("./src/service");
 exports.ContentToolsService = service_1.ContentToolsService;
-var directive_1 = require('./src/directive');
+var directive_1 = require("./src/directive");
 exports.ContentToolsDirective = directive_1.ContentToolsDirective;
 var ContentToolsModule = (function () {
     function ContentToolsModule() {
     }
-    ContentToolsModule = __decorate([
-        core_1.NgModule({
-            declarations: [directive_1.ContentToolsDirective],
-            exports: [directive_1.ContentToolsDirective],
-            providers: [service_1.ContentToolsService]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], ContentToolsModule);
     return ContentToolsModule;
 }());
+ContentToolsModule = __decorate([
+    core_1.NgModule({
+        declarations: [directive_1.ContentToolsDirective],
+        exports: [directive_1.ContentToolsDirective],
+        providers: [service_1.ContentToolsService]
+    }),
+    __metadata("design:paramtypes", [])
+], ContentToolsModule);
 exports.ContentToolsModule = ContentToolsModule;
 //# sourceMappingURL=index.js.map

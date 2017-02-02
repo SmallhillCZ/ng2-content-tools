@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders }           from '@angular/core';
+import { NgModule }           from '@angular/core';
 
 import { ContentToolsService } from './src/service';
 import { ContentToolsDirective } from './src/directive';
