@@ -35,7 +35,7 @@ var ContentToolsDirective = (function () {
             _this._toBeSaved = true;
         });
         this.el.nativeElement.addEventListener("click", function () { return _this.onTouched(); });
-        this.ctService.addRegion({
+        this.id = this.ctService.addRegion({
             el: this.el.nativeElement,
             start: function (e) { return _this.start.emit(e); },
             stop: function (e) { return _this.stop.emit(e); },
@@ -47,7 +47,7 @@ var ContentToolsDirective = (function () {
         this.ctService.refresh();
     };
     ContentToolsDirective.prototype.ngOnDestroy = function () {
-        this.ctService.removeRegion(this.el.nativeElement);
+        this.ctService.removeRegion(this.id);
     };
     /* ngModel */
     ContentToolsDirective.prototype.writeValue = function (value) {

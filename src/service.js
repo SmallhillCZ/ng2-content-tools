@@ -13,6 +13,7 @@ var ContentToolsService = (function () {
     function ContentToolsService() {
         // all regions
         this.regions = [];
+        this.i = 0;
         // get the editor
         this.editor = ContentTools.EditorApp.get();
     }
@@ -55,12 +56,15 @@ var ContentToolsService = (function () {
     };
     // adds region to list
     ContentToolsService.prototype.addRegion = function (region) {
+        this.i++;
+        region.id = this.i;
         this.regions.push(region);
+        return this.i;
     };
     // removes region to list
-    ContentToolsService.prototype.removeRegion = function (el) {
+    ContentToolsService.prototype.removeRegion = function (id) {
         // remove from regions array
-        this.regions = this.regions.filter(function (region) { return region.el !== el; });
+        this.regions = this.regions.filter(function (region) { return region.id !== id; });
     };
     // refresh regions
     ContentToolsService.prototype.refresh = function () {

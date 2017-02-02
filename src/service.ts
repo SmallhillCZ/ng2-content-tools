@@ -10,6 +10,8 @@ export class ContentToolsService {
 	// all regions
 	regions:any[] = [];
 
+	i = 0;
+
 	query: any;
 
 	activeQuery: any;
@@ -29,8 +31,7 @@ export class ContentToolsService {
 		this.editor.addEventListener('stop',e => this.fireRegionEvent(e));
 		this.editor.addEventListener('saved',e => this.fireRegionEvent(e));
 	}
-																		
-																		
+																									
 	fireRegionEvent(e){
 		this.regions.forEach(region => {
 			if(region.el.matches(this.activeQuery) && region[e._name]) region[e._name](e);
@@ -67,13 +68,16 @@ export class ContentToolsService {
 	
 	// adds region to list
 	addRegion(region){
+		this.i++;
+		region.id = this.i;
 		this.regions.push(region);
+		return this.i;
 	}
 	
 	// removes region to list
-	removeRegion(el){
+	removeRegion(id){
 		// remove from regions array
-		this.regions = this.regions.filter(region => region.el !== el);
+		this.regions = this.regions.filter(region => region.id !== id);
 	}
 					 
 	// refresh regions

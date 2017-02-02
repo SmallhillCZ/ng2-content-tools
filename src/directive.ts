@@ -30,6 +30,8 @@ export class ContentToolsDirective implements ControlValueAccessor {
 
 	_disabled:boolean = false;
 	_toBeSaved:boolean = false;
+	 
+	id:number;
 
 	onChange = (_) => {};
   onTouched = () => {};
@@ -42,7 +44,7 @@ export class ContentToolsDirective implements ControlValueAccessor {
 		});
 		this.el.nativeElement.addEventListener("click",() => this.onTouched());
 		
-		this.ctService.addRegion({
+		this.id = this.ctService.addRegion({
 			el: this.el.nativeElement,
 			start: e => this.start.emit(e),
 			stop: e => this.stop.emit(e),
@@ -57,7 +59,7 @@ export class ContentToolsDirective implements ControlValueAccessor {
 	}
 	
 	ngOnDestroy(){
-		this.ctService.removeRegion(this.el.nativeElement);
+		this.ctService.removeRegion(this.id);
 	}
 
 	/* ngModel */
