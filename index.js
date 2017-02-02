@@ -16,13 +16,11 @@ exports.ContentToolsDirective = directive_1.ContentToolsDirective;
 var ContentToolsModule = (function () {
     function ContentToolsModule() {
     }
-    ContentToolsModule.forRoot = function () {
-        return { ngModule: ContentToolsModule, providers: [service_1.ContentToolsService] };
-    };
     ContentToolsModule = __decorate([
         core_1.NgModule({
             declarations: [directive_1.ContentToolsDirective],
-            exports: [directive_1.ContentToolsDirective]
+            exports: [directive_1.ContentToolsDirective],
+            providers: [service_1.ContentToolsService]
         }), 
         __metadata('design:paramtypes', [])
     ], ContentToolsModule);

@@ -7,10 +7,7 @@ export { ContentToolsService, ContentToolsDirective };
 
 @NgModule({
   declarations: [ ContentToolsDirective ],
-  exports:      [ ContentToolsDirective ]
+  exports:      [ ContentToolsDirective ],
+	providers: 		[ ContentToolsService ]
 })
-export class ContentToolsModule {
-	public static forRoot(): ModuleWithProviders {
-    return {ngModule: ContentToolsModule, providers: [ContentToolsService]};
-  }
-}
+export class ContentToolsModule { }
