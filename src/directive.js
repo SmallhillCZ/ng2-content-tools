@@ -39,6 +39,8 @@ var ContentToolsDirective = (function () {
     };
     /* ngModel */
     ContentToolsDirective.prototype.writeValue = function (value) {
+        if (!value)
+            value = "";
         this.el.nativeElement.innerHTML = value;
         this.ctService.refresh();
     };

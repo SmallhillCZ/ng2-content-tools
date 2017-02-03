@@ -43,6 +43,7 @@ export class ContentToolsDirective implements ControlValueAccessor {
 
 	/* ngModel */
 	writeValue(value: any): void {
+		if(!value) value = "";
 		this.el.nativeElement.innerHTML = value;
 		this.ctService.refresh();
 	}
