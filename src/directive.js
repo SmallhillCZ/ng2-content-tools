@@ -35,7 +35,7 @@ var ContentToolsDirective = (function () {
         this.ctService.refresh();
     };
     ContentToolsDirective.prototype.ngOnDestroy = function () {
-        this.ctService.refresh();
+        this.ctService.stop(false);
     };
     /* ngModel */
     ContentToolsDirective.prototype.writeValue = function (value) {

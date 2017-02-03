@@ -38,7 +38,7 @@ export class ContentToolsDirective implements ControlValueAccessor {
 	}
 	
 	ngOnDestroy(){
-		this.ctService.refresh();
+		this.ctService.stop(false);
 	}
 
 	/* ngModel */
