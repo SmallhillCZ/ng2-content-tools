@@ -48,7 +48,7 @@ export class AppComponent {
 ### 2) Include directive in Angular2 template
 
 ``` html
-<div content-tools (start)="" (stop)="" (save)="" (saved)=""></div>
+<div content-tools [(ngModel)]="" (start)="" (stop)="" (save)="" (saved)=""></div>
 ```
 ### Configuring Content Tools
 
