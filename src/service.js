@@ -20,11 +20,7 @@ var ContentToolsService = (function () {
         this.editor.init(query, id, fixture, ignition);
         // save the default query for later restoring
         this.defaultQuery = query;
-        this.editor.addEventListener("saved", function (e) {
-            console.log(e);
-            if (_this.callback)
-                _this.callback(e);
-        });
+        this.editor.addEventListener("saved", function (e) { return _this.callback && _this.callback(e); });
     };
     ContentToolsService.prototype.start = function (query, cb) {
         // if there is query, use it, otherwise use default			 

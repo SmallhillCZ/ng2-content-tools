@@ -23,10 +23,7 @@ export class ContentToolsService {
 		// save the default query for later restoring
 		this.defaultQuery = query;
 		
-		this.editor.addEventListener("saved",e => {
-			console.log(e);
-			if(this.callback) this.callback(e);
-		});
+		this.editor.addEventListener("saved",e => this.callback && this.callback(e));
 	}
 
 	start(query?,cb?){
