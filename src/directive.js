@@ -22,32 +22,20 @@ var ContentToolsDirective = (function () {
         var _this = this;
         this.el = el;
         this.ctService = ctService;
-        this.start = new core_1.EventEmitter();
-        this.stop = new core_1.EventEmitter();
-        this.save = new core_1.EventEmitter();
-        this.saved = new core_1.EventEmitter();
         this._disabled = false;
-        this._toBeSaved = false;
         this.onChange = function (_) { };
         this.onTouched = function () { };
-        this.el.nativeElement.addEventListener("keyup", function () {
-            _this.onTouched();
-            _this._toBeSaved = true;
-        });
+        /* watch if element was touched */
+        this.el.nativeElement.addEventListener("keyup", function () { return _this.onTouched(); });
         this.el.nativeElement.addEventListener("click", function () { return _this.onTouched(); });
-        this.id = this.ctService.addRegion({
-            el: this.el.nativeElement,
-            start: function (e) { return _this.start.emit(e); },
-            stop: function (e) { return _this.stop.emit(e); },
-            save: function (e) { return _this._toBeSaved && _this.save.emit(e); },
-            saved: function (e) { return _this._toBeSaved && _this.saved.emit(e); }
-        });
+        /* watch if element was changed. content tools modifies elements while editing, therefore we make the change only after save event */
+        this.ctService.editor.addEventListener("save", function () { return _this.onChange(_this.el.nativeElement.innerHTML); });
     }
     ContentToolsDirective.prototype.ngOnChange = function () {
         this.ctService.refresh();
     };
     ContentToolsDirective.prototype.ngOnDestroy = function () {
-        this.ctService.removeRegion(this.id);
+        this.ctService.refresh();
     };
     /* ngModel */
     ContentToolsDirective.prototype.writeValue = function (value) {
@@ -57,22 +45,6 @@ var ContentToolsDirective = (function () {
     ContentToolsDirective.prototype.registerOnChange = function (fn) { this.onChange = fn; };
     ContentToolsDirective.prototype.registerOnTouched = function (fn) { this.onTouched = fn; };
     ContentToolsDirective.prototype.setDisabledState = function (isDisabled) { this._disabled = isDisabled; };
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], ContentToolsDirective.prototype, "start", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], ContentToolsDirective.prototype, "stop", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], ContentToolsDirective.prototype, "save", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], ContentToolsDirective.prototype, "saved", void 0);
     ContentToolsDirective = __decorate([
         core_1.Directive({
             selector: '[content-tools]',

@@ -11,9 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var ContentToolsService = (function () {
     function ContentToolsService() {
-        // all regions
-        this.regions = [];
-        this.i = 0;
         // get the editor
         this.editor = ContentTools.EditorApp.get();
     }
@@ -21,23 +18,20 @@ var ContentToolsService = (function () {
     ContentToolsService.prototype.init = function (query, id, fixture, ignition) {
         var _this = this;
         this.editor.init(query, id, fixture, ignition);
-        this.query = query;
-        this.editor.addEventListener('start', function (e) { return _this.fireRegionEvent(e); });
-        this.editor.addEventListener('stop', function (e) { return _this.fireRegionEvent(e); });
-        this.editor.addEventListener('saved', function (e) { return _this.fireRegionEvent(e); });
-    };
-    ContentToolsService.prototype.fireRegionEvent = function (e) {
-        var _this = this;
-        this.regions.forEach(function (region) {
-            if (region.el.matches(_this.activeQuery) && region[e._name])
-                region[e._name](e);
+        // save the default query for later restoring
+        this.defaultQuery = query;
+        this.editor.addEventListener("saved", function (e) {
+            console.log(e);
+            if (_this.callback)
+                _this.callback(e);
         });
     };
-    ContentToolsService.prototype.start = function (query) {
-        // if there is query, use it, otherwise use default
-        if (query)
-            this.activeQuery = query;
-        this.editor.syncRegions(this.activeQuery);
+    ContentToolsService.prototype.start = function (query, cb) {
+        // if there is query, use it, otherwise use default			 
+        this.editor.syncRegions(query ? query : this.defaultQuery);
+        // if user wants to attach a callback for this edit session
+        if (cb)
+            this.callback = cb;
         // launch editor
         this.editor.start();
         // if IgnitionUI present, propagate change of status there
@@ -47,24 +41,13 @@ var ContentToolsService = (function () {
     ContentToolsService.prototype.stop = function (save) {
         // stop editing, hide editor
         this.editor.stop(save);
-        this.activeQuery = this.query;
-        // set all regions, in case single region was specified in startEdit
-        this.editor.syncRegions(this.activeQuery);
+        // remove callback
+        this.callback = null;
+        // set default query
+        this.editor.syncRegions(this.defaultQuery);
         // if IgnitionUI present, propagate change of status there
         if (this.editor.ignition())
             this.editor.ignition().state("ready");
-    };
-    // adds region to list
-    ContentToolsService.prototype.addRegion = function (region) {
-        this.i++;
-        region.id = this.i;
-        this.regions.push(region);
-        return this.i;
-    };
-    // removes region to list
-    ContentToolsService.prototype.removeRegion = function (id) {
-        // remove from regions array
-        this.regions = this.regions.filter(function (region) { return region.id !== id; });
     };
     // refresh regions
     ContentToolsService.prototype.refresh = function () {
