@@ -48,8 +48,11 @@ export class AppComponent {
 ### 2) Include directive in Angular2 template
 
 ``` html
-<div content-tools (start)="" (stop)="" (save)="" (saved)=""></div>
+<div content-tools [(ngModel)]="" (start)="" (stop)="" (save)="" (saved)=""></div>
 ```
+
+- ngModel is updated only on the save event, reason is that Content Tools modifies the content in order to provide editing (adding classes and contenteditable) which we don't want in the output.
+
 ### Configuring Content Tools
 
 You can configure Content Tools in the standard way. The editor instance is stored at
