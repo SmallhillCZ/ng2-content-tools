@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { ImageUploader } from "./imageuploader";
+
 declare var ContentTools:any;
 
 @Injectable()
@@ -20,10 +22,23 @@ export class ContentToolsService {
 	init(query,id,fixture,ignition){
 		this.editor.init(query,id,fixture,ignition);
 		
+		ContentTools.IMAGE_UPLOADER = (dialog) => new ImageUploader(dialog);
+		
 		// save the default query for later restoring
 		this.defaultQuery = query;
 		
-		this.editor.addEventListener("saved",e => this.callback && this.callback(e));
+		// call callback when saved
+		this.editor.addEventListener("saved",e => {
+			
+			// if no callback is set,return
+			if(!this.callback) return;
+			
+			// save callback function because it is cleared by stop()
+			var callback = this.callback;
+			
+			//call the callback function. setTimeout is because directives need to first save their data
+			setTimeout(() => callback(e),100)
+		});
 	}
 
 	start(query?,cb?){
@@ -32,7 +47,7 @@ export class ContentToolsService {
 		this.editor.syncRegions(query ? query : this.defaultQuery);
 
 		// if user wants to attach a callback for this edit session
-		if(cb) this.callback = cb;
+		this.callback = cb;
 						
 		// launch editor
 		this.editor.start();	
@@ -40,9 +55,15 @@ export class ContentToolsService {
 		// if IgnitionUI present, propagate change of status there
 		if(this.editor.ignition()) this.editor.ignition().state("editing");
 	}
+	
+	save(passive){
+		return this.editor.save(passive);
+	}
 
 	stop(save?){
 						
+		if(this.editor.getState() !== "editing") return;
+			 
 		// stop editing, hide editor
 		this.editor.stop(save);
 			 
