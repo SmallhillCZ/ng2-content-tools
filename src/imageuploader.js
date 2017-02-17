@@ -1,3 +1,4 @@
+"use strict";
 var ImageUploader = (function () {
     function ImageUploader(dialog) {
         var _this = this;
@@ -106,5 +107,5 @@ var ImageUploader = (function () {
     };
     return ImageUploader;
 }());
-export { ImageUploader };
+exports.ImageUploader = ImageUploader;
 //# sourceMappingURL=imageuploader.js.map

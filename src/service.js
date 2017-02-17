@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Injectable } from '@angular/core';
-import { ImageUploader } from "./imageuploader";
+var core_1 = require('@angular/core');
+var imageuploader_1 = require("./imageuploader");
 var ContentToolsService = (function () {
     function ContentToolsService() {
         // get the editor
@@ -18,7 +19,7 @@ var ContentToolsService = (function () {
     ContentToolsService.prototype.init = function (query, id, fixture, ignition) {
         var _this = this;
         this.editor.init(query, id, fixture, ignition);
-        ContentTools.IMAGE_UPLOADER = function (dialog) { return new ImageUploader(dialog); };
+        ContentTools.IMAGE_UPLOADER = function (dialog) { return new imageuploader_1.ImageUploader(dialog); };
         // save the default query for later restoring
         this.defaultQuery = query;
         // call callback when saved
@@ -63,11 +64,11 @@ var ContentToolsService = (function () {
     ContentToolsService.prototype.refresh = function () {
         this.editor.syncRegions();
     };
+    ContentToolsService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [])
+    ], ContentToolsService);
     return ContentToolsService;
 }());
-ContentToolsService = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [])
-], ContentToolsService);
-export { ContentToolsService };
+exports.ContentToolsService = ContentToolsService;
 //# sourceMappingURL=service.js.map
